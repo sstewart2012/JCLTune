@@ -210,7 +210,7 @@ JNIEXPORT void JNICALL Java_ca_uwaterloo_jcltune_JTuner_printFormatted
 /*
  * Class:     ca_uwaterloo_jcltune_JTuner
  * Method:    printJSON
- * Signature: (Ljava/lang/String;Ljava/util/Map;)V
+ * Signature: (Ljava/lang/String;Ljava/util/List;)V
  */
 JNIEXPORT void JNICALL Java_ca_uwaterloo_jcltune_JTuner_printJSON
   (JNIEnv *, jobject, jstring, jobject);
