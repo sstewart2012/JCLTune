@@ -1,7 +1,7 @@
 package ca.uwaterloo.jcltune;
 
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
 /**
@@ -86,7 +86,7 @@ public final class JTuner {
   public native void addConstraint(int id, Predicate<List<Integer>> validIf,
       List<String> parameters);
 
-  public native void setLocalMemoryUsage(int id, Function<List<Integer>, Integer> amount,
+  public native void setLocalMemoryUsage(int id, IntFunction<List<Integer>> amount,
       List<String> parameters);
 
   public native <T> void addArgumentInput(List<T> source);
