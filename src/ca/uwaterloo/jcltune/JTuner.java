@@ -2,6 +2,7 @@ package ca.uwaterloo.jcltune;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Wrapper class for CLTuner C++ Tuner object. Calls native functions. The dispose method should be
@@ -82,7 +83,7 @@ public final class JTuner {
 
   public native void divLocalSize(int id, String[] range);
 
-  public native void addConstraint(int id, Function<List<Integer>, Boolean> validIf,
+  public native void addConstraint(int id, Predicate<List<Integer>> validIf,
       List<String> parameters);
 
   public native void setLocalMemoryUsage(int id, Function<List<Integer>, Integer> amount,
