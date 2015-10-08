@@ -20,10 +20,11 @@ public final class JTuner {
    * An UnsatisfiedLinkError will be thrown if the JVM cannot find the native library. Be sure to
    * define java.library.path correctly.
    * 
-   * Note: on Ubuntu, I also had to set the LD_LIBRARY_PATH environment variable in the run configuration,
-   * and I had to run ldconfig to configure dynamic linker run-time bindings.
+   * Note: on Ubuntu, I also had to set the LD_LIBRARY_PATH environment variable in the run
+   * configuration, and I had to run ldconfig to configure dynamic linker run-time bindings.
    * 
-   * For guidance: http://examples.javacodegeeks.com/java-basics/java-library-path-what-is-it-and-how-to-use/
+   * For guidance:
+   * http://examples.javacodegeeks.com/java-basics/java-library-path-what-is-it-and-how-to-use/
    */
   static {
     System.loadLibrary("jcltune");
@@ -83,8 +84,7 @@ public final class JTuner {
 
   public native void divLocalSize(int id, String[] range);
 
-  public native void addConstraint(int id, Predicate<List<Integer>> validIf,
-      List<String> parameters);
+  public native void addConstraint(int id, Predicate<List<Integer>> validIf, List<String> parameters);
 
   public native void setLocalMemoryUsage(int id, IntFunction<List<Integer>> amount,
       List<String> parameters);

@@ -29,15 +29,24 @@ public class Main {
     // Set up tuner
     JTuner myTuner = new JTuner(platformId, deviceId);
     final int kernelId =
-        myTuner.addKernel(new ArrayList<String>(Arrays.asList("kernels/hello.cl")), "hello", new int[] {N},
-            new int[] {WGSZ});
+        myTuner.addKernel(new ArrayList<String>(Arrays.asList("kernels/hello.cl")), "hello",
+            new int[] {N}, new int[] {WGSZ});
 
     // Add tuning parameters
     myTuner.addParameter(kernelId, "ABC", new int[] {32, 64});
+    myTuner.addParameter(kernelId, "DEF", new int[] {128, 256});
 
     // Set reference
-    myTuner.setReference(new ArrayList<String>(Arrays.asList("kernels/hello.cl")), "hello", new int[] {N},
-        new int[] {WGSZ});
+    myTuner.setReference(new ArrayList<String>(Arrays.asList("kernels/hello.cl")), "hello",
+        new int[] {N}, new int[] {WGSZ});
+
+    myTuner.addConstraint(kernelId, p -> {
+      System.out.println(p.getClass().getName() + ".size() = " + p.size());
+      for (Integer tmp : p) {
+        System.out.println(tmp);
+      }
+      return true;
+    }, Arrays.asList("ABC", "DEF"));
 
     // Deletes the native C++ object
     myTuner.dispose();

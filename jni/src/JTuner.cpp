@@ -178,26 +178,28 @@ JNIEXPORT void JNICALL Java_ca_uwaterloo_jcltune_JTuner_addConstraint
   const size_t id = (int) jid;
   const StringVec parameters = listToStringVector(env, jparameters);
 
+  // java.util.Function.Predicate
+  jclass cPredicate = env->FindClass("java/util/function/Predicate");
+  jmethodID mPredicateTest = env->GetMethodID(cPredicate, "test", "(Ljava/lang/Object;)Z");
+
+  // java.util.ArrayList
+  jclass cArrayList = env->FindClass("java/util/ArrayList");
+  jmethodID mArrayListInit = env->GetMethodID(cArrayList, "<init>",  "()V");
+  jmethodID mArrayListAdd = env->GetMethodID(cArrayList, "add", "(Ljava/lang/Object;)Z");
+
+  // java.lang.Integer
+  jclass cInteger = env->FindClass("java/lang/Integer");
+  jmethodID mIntegerInit = env->GetMethodID(cInteger, "<init>",  "(I)V");
+
   // Declaration of a function object "valid_if" that calls the Java function "jvalid_if".
-  auto valid_if = [env, obj, jvalid_if, jparameters] (SizetVec values) -> bool {
-    // java.util.Function.Predicate
-    jclass cPredicate = env->FindClass("java/util/function/Predicate");
-    jmethodID mPredicateTest = env->GetMethodID(cPredicate, "test", "(Ljava/lang/Object;)Z");
-
-    // java.util.ArrayList
-    jclass cArrayList = env->FindClass("java/util/ArrayList");
-    jmethodID mArrayListInit = env->GetMethodID(cArrayList, "<init>",  "(II)V");
-    jmethodID mArrayListAdd = env->GetMethodID(cArrayList, "add", "(ILjava/lang/Object;)V");
-    
-    // java.lang.Integer
-    jclass cInteger = env->FindClass("java/util/ArrayList");
-    jmethodID mIntegerInit = env->GetMethodID(cArrayList, "<init>",  "(II)V");
-
+  auto valid_if = [env, obj, cPredicate, mPredicateTest, cArrayList, mArrayListInit, 
+           mArrayListAdd, cInteger, mIntegerInit, jvalid_if, jparameters] (SizetVec values) -> bool
+  {
     // Add each value in the vector to an ArrayList<Integer>
     jobject jArrayList = env->NewObject(cArrayList, mArrayListInit);
     for (int i = 0; i < values.size(); ++i) {
       jobject tmp = env->NewObject(cInteger, mIntegerInit, (jint) values[i]);
-      env->CallVoidMethod(obj, mArrayListAdd, tmp);
+      env->CallBooleanMethod(jArrayList, mArrayListAdd, tmp);
     }
 
     // Calls the test method of the Predicate function object
@@ -205,6 +207,7 @@ JNIEXPORT void JNICALL Java_ca_uwaterloo_jcltune_JTuner_addConstraint
     return (bool) result;
   };
 
+  // Call the AddConstraint method with the function object and the vector of parameters
   Tuner *t = getHandle<Tuner>(env, obj);
   t->AddConstraint(id, valid_if, parameters);
 }
