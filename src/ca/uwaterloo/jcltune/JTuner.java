@@ -117,22 +117,4 @@ public final class JTuner {
   public native void printToFile(String filename);
 
   public native void suppressOutput();
-
-}
-
-
-/**
- * Generic pair class.
- * 
- * @param <L> Left entry of the pair.
- * @param <R> Right entry of the pair.
- */
-class Pair<L, R> {
-  L first;
-  R second;
-
-  public Pair(L first, R second) {
-    this.first = first;
-    this.second = second;
-  }
 }

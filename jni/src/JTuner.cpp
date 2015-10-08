@@ -175,7 +175,7 @@ JNIEXPORT void JNICALL Java_ca_uwaterloo_jcltune_JTuner_divLocalSize
 
 JNIEXPORT void JNICALL Java_ca_uwaterloo_jcltune_JTuner_addConstraint
 (JNIEnv *env, jobject obj, jint jid, jobject jvalid_if, jobject jparameters) {
-  const size_t id = (int) jid;
+  const size_t id = (size_t) jid;
   const StringVec parameters = listToStringVector(env, jparameters);
 
   // java.util.Function.Predicate
@@ -221,7 +221,20 @@ JNIEXPORT void JNICALL Java_ca_uwaterloo_jcltune_JTuner_setLocalMemoryUsage
   t->AddConstraint(id, nullptr, parameters);
 }
 
-// TODO AddArgument functions
+JNIEXPORT void JNICALL Java_ca_uwaterloo_jcltune_JTuner_addArgumentInput
+  (JNIEnv *, jobject, jobject) {
+  // TODO
+}
+
+JNIEXPORT void JNICALL Java_ca_uwaterloo_jcltune_JTuner_addArgumentOutput
+  (JNIEnv *, jobject, jobject) {
+  // TODO
+}
+
+JNIEXPORT void JNICALL Java_ca_uwaterloo_jcltune_JTuner_addArgumentScalar
+  (JNIEnv *, jobject, jobject) {
+  // TODO
+}
 
 JNIEXPORT void JNICALL Java_ca_uwaterloo_jcltune_JTuner_useFullSearch
 (JNIEnv *env, jobject obj) {
