@@ -51,7 +51,7 @@ public class Simple {
         tuner.addKernel(
             new ArrayList<String>(Arrays.asList("samples/simple/simple_unroll.opencl")),
             "matvec_unroll", new int[] {M}, new int[] {128});
-    tuner.addParameter(id, "UNROLL", new int[] {1, 2, 4});
+    tuner.addParameter(id, "UNROLL", 1, 2, 4);
 
     // Adds another kernel and its parameters. This kernel caches the input vector X into local
     // memory to save global memory accesses. Note that the kernel's workgroup size is determined by
@@ -59,8 +59,8 @@ public class Simple {
     id =
         tuner.addKernel(new ArrayList<String>(Arrays.asList("samples/simple/simple_tiled.opencl")),
             "matvec_tiled", new int[] {M}, new int[] {1});
-    tuner.addParameter(id, "TS", new int[] {32, 64, 128, 256, 512});
-    tuner.mulLocalSize(id, new String[] {"TS"});
+    tuner.addParameter(id, "TS", 32, 64, 128, 256, 512);
+    tuner.mulLocalSize(id, "TS");
 
     // Sets the tuner's golden reference function. This kernel contains the reference code to which
     // the output is compared. Supplying such a function is not required, but it is necessarily for

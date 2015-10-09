@@ -72,17 +72,17 @@ public final class JTuner {
   public native void setReferenceFromString(String source, String kernelName, long[] global,
       long[] local);
 
-  public native void addParameter(int id, String parameterName, int[] values);
+  public native void addParameter(int id, String parameterName, int... values);
 
   public native void addParameterReference(String parameterName, int value);
 
-  public native void mulGlobalSize(int id, String[] range);
+  public native void mulGlobalSize(int id, String... range);
 
-  public native void divGlobalSize(int id, String[] range);
+  public native void divGlobalSize(int id, String... range);
 
-  public native void mulLocalSize(int id, String[] range);
+  public native void mulLocalSize(int id, String... range);
 
-  public native void divLocalSize(int id, String[] range);
+  public native void divLocalSize(int id, String... range);
 
   public native void addConstraint(int id, Predicate<List<Integer>> validIf, List<String> parameters);
 
