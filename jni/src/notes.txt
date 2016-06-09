@@ -1,0 +1,11 @@
+On my Ubuntu system, I needed to add the directory locations to the shared libraries to .conf files in /etc/ld.conf.so.d/, and I needed to run "sudo ldconfig".
+
+Note that "ldconfig -v" can be used to see if the OS is loading the shared libraries.
+
+I encountered a problem where the JVM was not finding the method names in the native code. I used "nm libjcltune.so" to see the list of symbols in the file, realizing that the shared object was missing the method names.
+
+Anyway, to compile:
+	g++ -fPIC -std=c++11 -I../include -I/usr/lib/jvm/java-8-oracle/include/ -I/usr/lib/jvm/java-8-oracle/include/linux -c JTuner.cpp
+	g++ -shared -o ../../lib/JCLTune/linux/libjcltune.so ./JTuner.o -L../../lib/CLTune/linux -lcltune
+
+I need to make proper makefiles for Apple and linux.
